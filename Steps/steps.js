@@ -38,7 +38,7 @@ function steps(n) {
   }
 }
 
-// steps(4);
+steps(4);
 
 // recursion
 function recurseSteps(n, row = 0, stair = '') {
