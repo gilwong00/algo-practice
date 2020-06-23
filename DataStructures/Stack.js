@@ -1,4 +1,5 @@
 /**
+ * FILO (First In Last Out)
  * A stack has 4 methods
  * push - add
  * pop - remove
