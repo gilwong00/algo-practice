@@ -102,4 +102,122 @@ class BinarySearchTree {
     }
     return current.data;
   }
+
+  // finds node
+  find(data) {
+    let current = this.root;
+
+    while (current.data !== data) {
+      // if the data is less than the current node, search only the left side of the tree until we find a match
+      if (data < current.data) {
+        current = current.left;
+      } else {
+        // if the data is greated than the current data, search the right side of the tree until a match is found
+        current = current.right;
+      }
+
+      // no match
+      if (current === null) {
+        return null;
+      }
+    }
+    return current;
+  }
+  // checks if current node exists. Similiar logic to find but this returns a bool
+  isPresent(data) {
+    let current = this.root;
+
+    while (current) {
+      if (data === current.data) {
+        return true;
+      }
+      if (data < current.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+    return false;
+	}
+	
+  remove(data) {
+    const removeNode = (node, data) => {
+      // empty tree check
+      if (node === null) {
+        return null;
+      }
+
+      // if we find the node with the data
+      if (data === node.data) {
+        // if found node has no children
+        if (node.left === null && node.right === null) {
+          // when we return null, we are setting the matched node to null in the tree
+          return null;
+        }
+
+        /*
+					one child node check, if the node we want to remove only has a left or a right child node, we want to replace
+					the node we are going to remove, with its child to keep the structure of the tree
+				*/
+
+        // if node has no left child nodes. return right child nodes
+        if (node.left === null) {
+          return node.right;
+        }
+
+        // if node has no right child nodes. return left child nodes
+        if (node.right === null) {
+          return node.left;
+        }
+
+        /*
+				 	if node has 2 child nodes, one left node and one right node. We need to find a node to replace 
+					the node we will be removing. To do this, we want to go to the right sub node and all the way down to the
+					most left sub node after we gone to the right sub node  
+				 */
+
+        let tempNode = node.right;
+
+        // traversing down right nodes to get the lowest left node
+        while (tempNode.left !== null) {
+          tempNode = tempNode.left;
+        }
+        // replacing the parent node with our temp, this removes the original node we intended to remove but does break the tree structure
+        node.data = tempNode.data;
+        // this will setup the right side of the new node correctly
+        node.right = removeNode(node.right, tempNode.data);
+        return node;
+      }
+      // if data is less than the node data, check traverse the left side of the tree until we find the node to remove
+      else if (data < data.node) {
+        node.left = removeNode(node.left, data);
+        return node;
+      }
+      // if data is greater than the node data, check traverse the right side of the tree until we find the node to remove
+      else {
+        node.right = removeNode(node.right, data);
+        return node;
+      }
+    };
+
+    this.root = removeNode(this.root, data);
+  }
 }
+
+const bst = new BinarySearchTree();
+bst.add(4);
+bst.add(2);
+bst.add(6);
+bst.add(1);
+bst.add(3);
+bst.add(5);
+bst.add(7);
+bst.add(4);
+
+console.log(bst.isPresent(4)); // should return true
+console.log(bst.findMin()); // should return 1
+console.log(bst.findMax()); // should return 7
+bst.add(9);
+console.log(bst.findMax()); // should return 9
+bst.remove(4);
+console.log(bst.isPresent(4)); // should return false
