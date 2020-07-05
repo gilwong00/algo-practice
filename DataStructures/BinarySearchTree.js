@@ -138,8 +138,8 @@ class BinarySearchTree {
       }
     }
     return false;
-	}
-	
+  }
+
   remove(data) {
     const removeNode = (node, data) => {
       // empty tree check
@@ -202,6 +202,77 @@ class BinarySearchTree {
 
     this.root = removeNode(this.root, data);
   }
+  /*
+			 The minHeight is the distance from the root node to the first leaf node without 2 children aka left and right node
+			 this is a recursive function and we keep running this until we find a node without 2 child nodes
+	 */
+  findMinHeight(node = this.root) {
+    // empty search tree and exit condition
+    if (node === null) {
+      return -1;
+    }
+
+		/*
+			eventually one of these nodes is going to be -1 because the left or right node is going to be null
+			the idea is check all of the left and right nodes until we find the first leaf node without 2 children
+			which means either left or right will be -1
+			once we figure which leaf node to stop at we essentially found our level based which child node is empty
+		*/ 
+    let left = this.findMinHeight(node.left);
+    let right = this.findMinHeight(node.right);
+
+    if (left < right) {
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+
+  /*
+		 finds the distance from the root node to the bottom most node
+		 this is the opposite of findMin, instead of checking if right is greater than left
+		 we check if left is greater than right
+	 */
+  findMaxHeight() {
+    // empty search tree
+    if (node === null) {
+      return -1;
+    }
+
+    // eventually one of these nodes is going to be -1
+    let left = this.findMinHeight(node.left);
+    let right = this.findMinHeight(node.right);
+
+    if (left > right) {
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+
+  /*
+		To determine if a tree is balanced or not, the difference between the min height and the max height is no greater than one
+		IE. if min height is 1 and max height is 3, this is no balanced. if min height is 2 and max height is 3 then this tree is balanced
+	 */
+  isBalanced() {
+    return this.findMinHeight() >= this.findMaxHeight() - 1;
+  }
+
+  // begin search at the left most node and end at the right most node, essentially all numbers from lowest to highest
+  inOrder() {}
+
+  // the root orders before the leaves. Shows all root nodes first then shows nodes after
+  preOrder() {}
+
+  // explores leaf nodes first before the root, first finds all the leave nodes then moves up to the parents
+  // onces it explores all the leaves on one branch it then moves to the next branch
+  postOrder() {}
+
+  // this is a breath first search
+  /*
+		this explores all the nodes in a given level with a tree before moving on to the next level
+	*/
+  levelOrder() {}
 }
 
 const bst = new BinarySearchTree();
@@ -221,3 +292,17 @@ bst.add(9);
 console.log(bst.findMax()); // should return 9
 bst.remove(4);
 console.log(bst.isPresent(4)); // should return false
+
+const bst2 = new BinarySearchTree();
+bst2.add(9);
+bst2.add(4);
+bst2.add(17);
+bst2.add(3);
+bst2.add(6);
+bst2.add(22);
+bst2.add(5);
+bst2.add(7);
+bst2.add(20);
+
+console.log(bst2.findMinHeight()); // should return 1
+console.log(bst2.findMaxHeight()); // should return 3
