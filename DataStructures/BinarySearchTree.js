@@ -214,13 +214,14 @@ class BinarySearchTree {
 
 		/*
 			eventually one of these nodes is going to be -1 because the left or right node is going to be null
-			the idea is check all of the left and right nodes until we find the first leaf node without 2 children
-			which means either left or right will be -1
-			once we figure which leaf node to stop at we essentially found our level based which child node is empty
+			the idea is check all of the left and right nodes until we find the first node without 2 children aka a leaf node
+			once we determine which node to stop at we essentially found our level based which child node is empty
+			the final answer would be the minimum value, right or left, plus 1;
 		*/ 
     let left = this.findMinHeight(node.left);
     let right = this.findMinHeight(node.right);
 
+		// returns 
     if (left < right) {
       return left + 1;
     } else {
