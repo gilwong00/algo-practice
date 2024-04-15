@@ -37,7 +37,8 @@ func numSubarrayProductLessThanK(nums []int, k int) int {
 		// check if our subarray is valid
 		// if product is greater than or equal to k
 		// left <= right, checks if the left pointer has passed the right pointer, if it has, stop this loop.
-		// this is not a valid subarray so we want to increment our left pointer
+		// this is not a valid subarray because product, the total of product * right pointer value
+		// is larger than k so we want to increment our left pointer
 		for left <= right && product >= k {
 			// getting the value at the left pointer and updating our product to be that value
 			product /= nums[left]
