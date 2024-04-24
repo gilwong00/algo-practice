@@ -42,8 +42,12 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		// h1 to be -1 so that it falls into the l1 = -math.MaxInt condition. Otherwise
 		// it goes into an infinite loop of l=r=h=0
 		h1 := int(math.Floor(float64(leftPointer+rightPointer) / 2)) // -> nums2
-		// h2 is the index of the midpoint for our second array so
-		// -2 because length is last_index+1 from 0 so numsMedian+1+p+1 = half
+		// h2 is the index of the midpoint for our second array
+		// since we ran binary search on the smaller array, num1. Instead of running
+		// binary search again on the larger array, we can compute our left partion by
+		// taking half, the sum on both arrays divided by 2 and subtracting h1, the size
+		// of the left partition of the smaller array
+		// -2 because length is last_index+1 from 0 so h1+1+h2+1 = half
 		h2 := half - h1 - 2
 		// check for correct left partition
 		// declaring the values that we are going to check against
