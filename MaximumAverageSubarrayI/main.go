@@ -1,5 +1,6 @@
 package main
 
+/// https://leetcode.com/problems/maximum-average-subarray-i/description/
 import (
 	"fmt"
 	"math"
