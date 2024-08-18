@@ -30,7 +30,10 @@ func isPalindrome(x int) bool {
 	reversedInt := 0
 	temp := x
 	for temp > 0 {
+		// reversing the int, takes the last number from x and appends it to the beginning
+		// of reverseInt.
 		reversedInt = reversedInt*10 + temp%10
+		// removing the digit from the temp. We do this till temp becomes 0
 		temp = temp / 10
 	}
 	return x == reversedInt
